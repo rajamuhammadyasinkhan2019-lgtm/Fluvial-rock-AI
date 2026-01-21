@@ -1,0 +1,7 @@
+{
+  "name": "FluvioRock AI",
+  "description": "Professional AI-driven geological analysis tool for identifying and interpreting river stones, clasts, fossils, and minerals within fluvial systems.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
