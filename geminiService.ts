@@ -14,12 +14,15 @@ export const analyzeGeologicalSample = async (
 
   switch (mode) {
     case 'FUSION':
-      systemInstruction = `Act as a Multi-Modal Geological Researcher. Integrate the provided visual image (CNN input) with the following numeric data:
-      - DEM Slope: ${fusionData?.slope}°
-      - DEM Curvature: ${fusionData?.curvature}
-      - Satellite NDVI: ${fusionData?.ndvi}
-      - Satellite Clay Index: ${fusionData?.clayIndex}
-      Analyze the image for lithology and combine it with the terrain/spectral indices to provide a 'SCI-LEVEL' interpretation of the paleo-environment or mineral accumulation zones.`;
+      systemInstruction = `Act as a Senior Multi-Modal Geological Researcher. You are analyzing data from a Fusion Architecture that integrates:
+      1. CNN Vision Branch: Analyzes 224x224 RGB lithological textures.
+      2. Geomorphology Branch: Processes DEM Slope (${fusionData?.slope}°), Curvature (${fusionData?.curvature}), and Satellite Indices (NDVI: ${fusionData?.ndvi}, Clay Index: ${fusionData?.clayIndex}).
+      
+      Your task is to perform 'Decision-Level Fusion':
+      - Correlate visual mineralogy with terrain stability (Slope/Curvature).
+      - Use NDVI/Clay Index to filter vegetation noise and identify spectral mineral signatures.
+      - Provide a 'SCI-LEVEL' interpretation of the paleo-environment, specifically identifying potential mineral accumulation zones or fluvial depositional history.
+      - Output the 'fusionLogic' as a set of specific technical deductions where visual and numeric data intersect.`;
       
       responseSchema = {
         type: Type.OBJECT,
@@ -105,7 +108,7 @@ export const analyzeGeologicalSample = async (
           interpretation: { type: Type.STRING },
           formationDetails: { type: Type.STRING }
         },
-        required: ["identified", "confidence", "silicaSaturation", "alkalinity", "interpretation", "formationDetails"]
+        required: ["identified", "confidence", "silicaSaturation", "alkalinity", "rockSeries", "interpretation", "formationDetails"]
       };
       break;
 

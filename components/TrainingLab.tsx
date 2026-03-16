@@ -42,36 +42,45 @@ const TrainingLab: React.FC = () => {
           <div className="bg-slate-950 p-8 rounded-2xl border border-slate-800 relative overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
               {/* Image Branch */}
-              <div className="space-y-4">
+              <div className="space-y-4 relative">
                 <p className="text-[9px] font-bold text-blue-400 uppercase mb-2">Branch A: Vision (CNN)</p>
                 <div className="flex flex-col space-y-2 font-mono text-[9px]">
                   <div className="p-2 bg-slate-800 border-l-2 border-blue-500 text-slate-300">Input: 224x224x3 [RGB]</div>
                   <div className="p-2 bg-slate-800 border-l-2 border-blue-500 text-slate-300">Conv2D + MaxPool x 3</div>
                   <div className="p-2 bg-slate-800 border-l-2 border-blue-500 text-slate-300">Global Average Flatten</div>
                 </div>
+                {/* Connection Line */}
+                <div className="hidden md:block absolute -bottom-8 left-1/2 w-px h-8 bg-gradient-to-b from-blue-500 to-emerald-500"></div>
               </div>
 
               {/* DEM Branch */}
-              <div className="space-y-4">
+              <div className="space-y-4 relative">
                 <p className="text-[9px] font-bold text-amber-400 uppercase mb-2">Branch B: Geomorphology (DEM/SAT)</p>
                 <div className="flex flex-col space-y-2 font-mono text-[9px]">
                   <div className="p-2 bg-slate-800 border-l-2 border-amber-500 text-slate-300">Input: [Slope, NDVI, Clay, Curv]</div>
                   <div className="p-2 bg-slate-800 border-l-2 border-amber-500 text-slate-300">Dense Layer (64 Units)</div>
                   <div className="p-2 bg-slate-800 border-l-2 border-amber-500 text-slate-300">Batch Normalization</div>
                 </div>
+                {/* Connection Line */}
+                <div className="hidden md:block absolute -bottom-8 left-1/2 w-px h-8 bg-gradient-to-b from-amber-500 to-emerald-500"></div>
               </div>
             </div>
 
             {/* Concatenation Logic */}
-            <div className="mt-8 flex flex-col items-center">
-              <div className="w-px h-8 bg-slate-700"></div>
-              <div className="bg-emerald-600 px-6 py-2 rounded-full text-[10px] font-bold text-white shadow-lg shadow-emerald-900 uppercase tracking-widest">
-                Concatenate(A, B)
+            <div className="mt-8 flex flex-col items-center relative z-10">
+              <div className="bg-emerald-600 px-6 py-2 rounded-full text-[10px] font-bold text-white shadow-lg shadow-emerald-900 uppercase tracking-widest flex items-center space-x-2">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Concatenate(A, B)</span>
               </div>
-              <div className="w-px h-8 bg-slate-700"></div>
-              <div className="bg-slate-800 p-3 rounded-lg border border-slate-700 text-center w-full md:w-64">
-                <p className="text-[9px] font-mono text-emerald-400">Dense(256) + Dropout(0.4)</p>
-                <p className="text-[9px] font-mono text-emerald-300">Softmax: 14 Litho-Classes</p>
+              <div className="w-px h-8 bg-emerald-500"></div>
+              <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center w-full md:w-72 shadow-2xl">
+                <p className="text-[10px] font-mono text-emerald-400 font-bold mb-1">Dense(256) + Dropout(0.4)</p>
+                <div className="w-full bg-slate-700 h-1 rounded-full mb-2">
+                  <div className="bg-emerald-500 h-full w-full animate-pulse"></div>
+                </div>
+                <p className="text-[9px] font-mono text-emerald-300">Softmax Output: 14 Litho-Classes</p>
               </div>
             </div>
             
@@ -132,21 +141,31 @@ const TrainingLab: React.FC = () => {
             </div>
           </div>
 
-          {/* IV. STATUS & UPLINK */}
+          {/* IV. MODEL ROADMAP */}
           <div className="space-y-6">
-            <h3 className="text-emerald-400 font-bold uppercase tracking-widest text-[10px] mb-4 border-l-2 border-emerald-500 pl-2">IV. Deploy Status</h3>
+            <h3 className="text-emerald-400 font-bold uppercase tracking-widest text-[10px] mb-4 border-l-2 border-emerald-500 pl-2">IV. Model Roadmap</h3>
             <div className="p-4 bg-emerald-950/20 rounded-xl border border-emerald-900/50 space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded bg-slate-800 flex items-center justify-center text-emerald-500">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                {[
+                  { label: 'Synthetic CNN Base', progress: 100 },
+                  { label: 'Multi-Modal Fusion', progress: 100 },
+                  { label: 'TFLite Conversion', progress: 100 },
+                  { label: 'Field Validation', progress: 75 },
+                ].map((step, idx) => (
+                  <div key={idx} className="space-y-1">
+                    <div className="flex justify-between items-center text-[9px]">
+                      <span className="text-slate-300 font-bold">{step.label}</span>
+                      <span className="text-emerald-400 font-mono">{step.progress}%</span>
+                    </div>
+                    <div className="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full rounded-full ${step.progress === 100 ? 'bg-emerald-500' : 'bg-emerald-500/50 animate-pulse'}`} 
+                        style={{ width: `${step.progress}%` }}
+                      ></div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[9px] text-slate-200 font-bold">Inference Engine</p>
-                    <p className="text-[8px] text-emerald-500 uppercase">Synchronized</p>
-                  </div>
-                </div>
-                <button className="w-full py-2 bg-emerald-600 text-white text-[10px] font-bold uppercase rounded hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-950 active:scale-95">
-                    Generate Android Build
+                ))}
+                <button className="w-full mt-2 py-2 bg-emerald-600 text-white text-[10px] font-bold uppercase rounded hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-950 active:scale-95">
+                    Download Android SDK
                 </button>
             </div>
           </div>
