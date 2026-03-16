@@ -9,6 +9,7 @@ interface Props {
 
 const modules: { id: AnalysisMode; label: string; icon: string; desc: string }[] = [
   { id: 'GENERAL', label: 'General ID', icon: '🔍', desc: 'Lithology context' },
+  { id: 'PETRO', label: 'Petrography', icon: '🌋', desc: 'Basic/Alkaline ID' },
   { id: 'GRAIN', label: 'Grain Shape', icon: '📐', desc: 'Wadell metrics' },
   { id: 'GEM', label: 'Gem/Mineral', icon: '💎', desc: 'Discrimination' },
   { id: 'FUSION', label: 'Multi-Modal', icon: '📡', desc: 'CNN + DEM + SAT' },
@@ -17,7 +18,7 @@ const modules: { id: AnalysisMode; label: string; icon: string; desc: string }[]
 
 const ModuleSelector: React.FC<Props> = ({ currentMode, onSelect }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
       {modules.map((mod) => (
         <button
           key={mod.id}

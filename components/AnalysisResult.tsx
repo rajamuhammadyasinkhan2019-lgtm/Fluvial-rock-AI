@@ -71,6 +71,58 @@ const AnalysisResult: React.FC<Props> = ({ result, reset }) => {
               </div>
             </div>
           )}
+
+          {result.mode === 'GENERAL' && (
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Rock Type</p>
+                  <p className="text-sm font-bold text-slate-800">{result.rockType}</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Composition</p>
+                  <p className="text-sm font-bold text-slate-800">{result.composition}</p>
+                </div>
+              </div>
+              {result.geologicalAge && (
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Geological Age</p>
+                  <p className="text-sm font-bold text-slate-800">{result.geologicalAge}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {result.mode === 'PETRO' && (
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Silica Saturation</p>
+                  <p className="text-sm font-bold text-slate-800">{result.silicaSaturation}</p>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Alkalinity</p>
+                  <p className="text-sm font-bold text-slate-800">{result.alkalinity}</p>
+                </div>
+              </div>
+              {result.rockSeries && (
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Rock Series</p>
+                  <p className="text-sm font-bold text-slate-800">{result.rockSeries}</p>
+                </div>
+              )}
+              {result.mineralogy && (
+                <div className="p-3 bg-slate-50 rounded-xl">
+                  <p className="text-slate-400 text-[9px] font-bold uppercase tracking-wider mb-1">Mineralogy</p>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {result.mineralogy.map((m, i) => (
+                      <span key={i} className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">{m}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="lg:col-span-2 space-y-6">

@@ -1,5 +1,5 @@
 
-export type AnalysisMode = 'GENERAL' | 'GRAIN' | 'GEM' | 'PALEO' | 'TRAINING' | 'FUSION';
+export type AnalysisMode = 'GENERAL' | 'GRAIN' | 'GEM' | 'PALEO' | 'TRAINING' | 'FUSION' | 'PETRO';
 
 export interface GeoAnalysisResult {
   mode: AnalysisMode;
@@ -14,6 +14,15 @@ export interface GeoAnalysisResult {
   transparency?: string;
   channelType?: 'Meandering' | 'Braided' | 'Incised' | 'Anastomosing';
   energyLevel?: 'Low' | 'Moderate' | 'High';
+  
+  // Petrographic fields
+  silicaSaturation?: 'Oversaturated' | 'Saturated' | 'Undersaturated';
+  alkalinity?: 'Alkaline' | 'Sub-Alkaline' | 'Calc-Alkaline';
+  rockSeries?: string;
+  mineralogy?: string[];
+  
+  rockType?: 'Igneous' | 'Sedimentary' | 'Metamorphic' | 'Unknown';
+  composition?: string;
   
   // Fusion fields
   demContext?: {

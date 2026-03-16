@@ -82,19 +82,48 @@ export const analyzeGeologicalSample = async (
       };
       break;
 
-    default:
-      systemInstruction = `Act as an expert geologist. Identify the sample and provide fluvial context.`;
+    case 'PETRO':
+      systemInstruction = `Act as a petrologist specializing in igneous rocks. 
+      Identify the silica saturation level:
+      - Oversaturated (contains free quartz)
+      - Saturated (contains neither free quartz nor feldspathoids)
+      - Undersaturated (contains feldspathoids like nepheline or leucite).
+      Determine the alkalinity:
+      - Alkaline (high total alkalis relative to silica)
+      - Sub-Alkaline (Tholeiitic or Calc-Alkaline)
+      - Calc-Alkaline (typical of subduction environments).
+      Identify the rock series and list key minerals observed.`;
       responseSchema = {
         type: Type.OBJECT,
         properties: {
           identified: { type: Type.STRING },
           confidence: { type: Type.NUMBER },
+          silicaSaturation: { type: Type.STRING, enum: ['Oversaturated', 'Saturated', 'Undersaturated'] },
+          alkalinity: { type: Type.STRING, enum: ['Alkaline', 'Sub-Alkaline', 'Calc-Alkaline'] },
+          rockSeries: { type: Type.STRING },
+          mineralogy: { type: Type.ARRAY, items: { type: Type.STRING } },
+          interpretation: { type: Type.STRING },
+          formationDetails: { type: Type.STRING }
+        },
+        required: ["identified", "confidence", "silicaSaturation", "alkalinity", "interpretation", "formationDetails"]
+      };
+      break;
+
+    default:
+      systemInstruction = `Act as an expert geologist. Identify the sample, categorize it as Igneous, Sedimentary, or Metamorphic, and provide its mineral composition and fluvial context.`;
+      responseSchema = {
+        type: Type.OBJECT,
+        properties: {
+          identified: { type: Type.STRING },
+          confidence: { type: Type.NUMBER },
+          rockType: { type: Type.STRING, enum: ['Igneous', 'Sedimentary', 'Metamorphic', 'Unknown'] },
+          composition: { type: Type.STRING, description: "Primary mineral composition" },
           interpretation: { type: Type.STRING },
           fluvialContext: { type: Type.STRING },
           geologicalAge: { type: Type.STRING },
           formationDetails: { type: Type.STRING }
         },
-        required: ["identified", "confidence", "interpretation", "formationDetails"]
+        required: ["identified", "confidence", "rockType", "composition", "interpretation", "formationDetails"]
       };
   }
 
